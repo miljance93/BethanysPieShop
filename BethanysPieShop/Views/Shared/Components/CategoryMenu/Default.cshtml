@@ -16,5 +16,11 @@
         <li>
             <a asp-controller="Pie" asp-action="List" asp-route-Category="">View all pies</a>
         </li>
+        @if(User.Identity.IsAuthenticated)
+            {
+            <li>
+                <a asp-controller="PieManager" asp-action="Index">Pie Manager</a>
+            </li>
+            }
     </ul>
 </li>
