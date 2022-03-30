@@ -75,7 +75,8 @@ namespace BethanysPieShop.Controllers
                 Price = Math.Round(pie.Price, 1),
                 LongDescription = pie.LongDescription,
                 ShortDescription = pie.ShortDescription,
-                Categories = categoryList
+                Categories = categoryList,
+                ImageThumbnailUrl = pie.ImageThumbnailUrl
             };
 
             return View(vm);

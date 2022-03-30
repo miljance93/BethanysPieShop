@@ -3,7 +3,15 @@
 
 <h1>@Model.CurrentCategory</h1>
 
+<div class="edit">
+    <p class="button">
+        <a class="btn btn-primary"
+           asp-controller="PieManager"
+           asp-action="CreatePie">Create pie</a>
+    </p>
+</div>
+
 @foreach (var pie in Model.Pies)
 {
-    <partial name="_PieCard" model="pie" />
+    <partial name="_PieManagerCard" model="pie" />
 }
