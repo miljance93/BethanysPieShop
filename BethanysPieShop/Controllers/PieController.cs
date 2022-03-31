@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BethanysPieShop.Models;
 using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -65,7 +66,7 @@ namespace BethanysPieShop.Controllers
             if (pie == null)
                 return NotFound();
 
-            var categoryList = _categoryRepository.AllCategories.ToList();
+            var categoryList = _categoryRepository.AllCategories;
 
             var vm = new PieVM()
             {

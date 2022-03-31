@@ -1,10 +1,6 @@
 ﻿using BethanysPieShop.Models;
 using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BethanysPieShop.Controllers
 {
@@ -18,28 +14,45 @@ namespace BethanysPieShop.Controllers
             _pieRepository = pieRepository;
             _categoryRepository = categoryRepository;
         }
-        public ViewResult List(string category)
+
+        public ViewResult List()
         {
-            IEnumerable<Pie> pies;
-            string currentCategory;
+            var pies = _pieRepository.AllPies;
+            var vm = new PiesListViewModel()
+            {
+                Pies = pies
+            };
 
-            if (string.IsNullOrEmpty(category))
-            {
-                pies = _pieRepository.AllPies.OrderBy(p => p.PieId);
-                currentCategory = "Pie manager";
-            }
-            else
-            {
-                pies = _pieRepository.AllPies.Where(p => p.Category.CategoryName == category)
-                    .OrderBy(p => p.PieId);
-                currentCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
-            }
+            return View(vm);
+        }
 
-            return View(new PiesListViewModel
+        public ViewResult Edit(int pieId) 
+        {
+            var pie = _pieRepository.GetPieById(pieId);
+            var categories = _categoryRepository.AllCategories;
+
+            var vm = new PieVM()
             {
-                Pies = pies,
-                CurrentCategory = currentCategory
-            });
+                PieId = pie.PieId,
+                ImageThumbnailUrl = pie.ImageThumbnailUrl,
+                ImageUrl = pie.ImageUrl,
+                LongDescription = pie.LongDescription,
+                Name = pie.Name,
+                Price = pie.Price,
+                ShortDescription = pie.ShortDescription,
+                AllergyInformation = pie.AllergyInformation,
+                InStock = pie.InStock,
+                IsPieOfTheWeek = pie.IsPieOfTheWeek,
+                CategoryId = pie.CategoryId,
+                Categories = categories
+            };
+
+            return View(vm);
+        }
+
+        public ViewResult EditPie(PieVM vm) 
+        {
+            return View();
         }
     }
 }
