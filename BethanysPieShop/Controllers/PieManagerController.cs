@@ -1,6 +1,7 @@
 ﻿using BethanysPieShop.Models;
 using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BethanysPieShop.Controllers
 {
@@ -52,7 +53,24 @@ namespace BethanysPieShop.Controllers
 
         public ViewResult EditPie(PieVM vm) 
         {
-            return View();
+            var pie = new Pie()
+            {
+                PieId = vm.PieId,
+                ImageThumbnailUrl = vm.ImageThumbnailUrl,
+                ImageUrl = vm.ImageUrl,
+                LongDescription = vm.LongDescription,
+                Name = vm.Name,
+                Price = vm.Price,
+                ShortDescription = vm.ShortDescription,
+                AllergyInformation = vm.AllergyInformation,
+                InStock = vm.InStock,
+                IsPieOfTheWeek = vm.IsPieOfTheWeek,
+                CategoryId = vm.CategoryId,
+                Category = vm.Category
+            };
+            _pieRepository.Update(pie);
+
+            return View(pie);
         }
     }
 }

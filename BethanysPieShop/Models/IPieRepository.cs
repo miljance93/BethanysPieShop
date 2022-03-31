@@ -10,5 +10,6 @@ namespace BethanysPieShop.Models
         IEnumerable<Pie> AllPies { get; }
         IEnumerable<Pie> PiesOfTheWeek { get; }
         Pie GetPieById(int pieId);
+        bool Update<TInput>(TInput input) where TInput : class;
     }
 }
