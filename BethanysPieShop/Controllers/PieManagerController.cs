@@ -72,5 +72,26 @@ namespace BethanysPieShop.Controllers
 
             return View(pie);
         }
+
+        public ViewResult Create(PieVM pieVM)
+        {
+            var pie = new Pie
+            {
+                PieId = pieVM.PieId,
+                Name = pieVM.Name,
+                ImageUrl = pieVM.ImageUrl,
+                Price = pieVM.Price,
+                ShortDescription = pieVM.ShortDescription,
+                LongDescription = pieVM.LongDescription,
+                ImageThumbnailUrl = pieVM.ImageThumbnailUrl,
+                AllergyInformation = pieVM.AllergyInformation,
+                IsPieOfTheWeek = pieVM.IsPieOfTheWeek,
+                InStock = pieVM.InStock,
+                CategoryId = pieVM.CategoryId,
+                Category = pieVM.Category
+            };
+            _pieRepository.Add(pie);
+            return View(pie);
+        }
     }
 }

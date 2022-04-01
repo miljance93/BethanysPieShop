@@ -41,5 +41,11 @@ namespace BethanysPieShop.Models
             _appDbContext.Set<TInput>().Update(input);
             return  _appDbContext.SaveChanges() > 0;
         }
+
+        public bool Add(Pie pie)
+        {
+            _appDbContext.Pies.Add(pie);
+            return _appDbContext.SaveChanges() > 0;
+        }
     }
 }
