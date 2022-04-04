@@ -1,6 +1,6 @@
 ﻿@model PieVM;
 
-<form asp-controller="PieManager" asp-action="Create" method="post" class="form-horizontal" role="form" asp-route-pieId="@Model.PieId">
+<form asp-controller="PieManager" asp-action="CreatePie" method="post" class="form-horizontal" role="form" asp-route-pieId="@Model.PieId">
     <h4>Fill in details about pie.</h4>
     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -79,7 +79,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">Select Category</label>
         <div class="col-md-5">
-            <select name="categories" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+            <select name="categories" class="form-control" asp-for="Categories" asp-items="@(new SelectList(Model.Categories, "CategoryId", "Category"))"></select>
         </div>
         <input type="hidden" asp-for="CategoryId" />
     </div>

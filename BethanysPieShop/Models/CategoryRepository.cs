@@ -17,6 +17,8 @@ namespace BethanysPieShop.Models
 
         public IEnumerable<Category> AllCategories => _appDbContext.Categories;
 
+        public Category GetCategory => _appDbContext.Categories.FirstOrDefault();
+
         public Category GetCategoryById(int id)
         {
             return _appDbContext.Categories.FirstOrDefault(x => x.CategoryId == id);
