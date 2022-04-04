@@ -74,23 +74,12 @@ namespace BethanysPieShop.Controllers
             return View(pie);
         }
 
-        public ViewResult Create(Pie pie)
+        public ViewResult Create()
         {
             var categories = _categoryRepository.AllCategories;
+
             var vm = new PieVM
             {
-                AllergyInformation = pie.AllergyInformation,
-                Category = pie.Category,
-                CategoryId = pie.CategoryId,
-                ImageThumbnailUrl = pie.ImageThumbnailUrl,
-                ImageUrl = pie.ImageUrl,
-                InStock = pie.InStock,
-                IsPieOfTheWeek = pie.IsPieOfTheWeek,
-                LongDescription = pie.LongDescription,
-                ShortDescription = pie.ShortDescription,
-                Name = pie.Name,
-                PieId = pie.PieId,
-                Price = pie.Price,
                 Categories = categories
             };
 
