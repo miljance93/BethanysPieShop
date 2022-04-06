@@ -38,16 +38,40 @@ namespace BethanysPieShop.Models
 
         public bool Update<TInput>(TInput input) where TInput : class
         {
-            _appDbContext.Set<TInput>().Update(input);
-            return  _appDbContext.SaveChanges() > 0;
+            bool result;
+
+            try
+            {
+                _appDbContext.Set<TInput>().Update(input);
+                _appDbContext.SaveChanges();
+
+                result = true;
+            }
+            catch 
+            {
+                result = false;
+            }
+
+            return result;
         }
 
         public bool Add(Pie pie)
         {
-            _appDbContext.Pies.Add(pie);
-            return _appDbContext.SaveChanges() > 0;
+            bool result;
+
+            try
+            {
+                _appDbContext.Pies.Add(pie);
+                _appDbContext.SaveChanges();
+
+                result = true;
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
         }
-
-
     }
 }

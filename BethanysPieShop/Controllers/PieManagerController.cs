@@ -89,22 +89,31 @@ namespace BethanysPieShop.Controllers
 
         public ViewResult CreatePie(PieVM vm)
         {
-            var pie = new Pie
-            {
-                PieId = vm.PieId,
-                ImageThumbnailUrl = vm.ImageThumbnailUrl,
-                ImageUrl = vm.ImageUrl,
-                LongDescription = vm.LongDescription,
-                Name = vm.Name,
-                Price = vm.Price,
-                ShortDescription = vm.ShortDescription,
-                AllergyInformation = vm.AllergyInformation,
-                InStock = vm.InStock,
-                IsPieOfTheWeek = vm.IsPieOfTheWeek,
-                CategoryId = vm.CategoryId
-            };
+            var pie = new Pie();
 
-            _pieRepository.Add(pie);
+            if (ModelState.IsValid)
+            {
+                pie = new Pie
+                {
+                    PieId = vm.PieId,
+                    ImageThumbnailUrl = vm.ImageThumbnailUrl,
+                    ImageUrl = vm.ImageUrl,
+                    LongDescription = vm.LongDescription,
+                    Name = vm.Name,
+                    Price = vm.Price,
+                    ShortDescription = vm.ShortDescription,
+                    AllergyInformation = vm.AllergyInformation,
+                    InStock = vm.InStock,
+                    IsPieOfTheWeek = vm.IsPieOfTheWeek,
+                    CategoryId = vm.CategoryId
+                };
+
+                _pieRepository.Add(pie);
+            }
+            else 
+            {
+                
+            }
 
             return View(pie);
         }
