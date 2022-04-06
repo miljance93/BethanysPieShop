@@ -54,6 +54,7 @@ namespace BethanysPieShop.Controllers
 
         public ViewResult EditPie(PieVM vm) 
         {
+
             var pie = new Pie()
             {
                 PieId = vm.PieId,
@@ -100,8 +101,7 @@ namespace BethanysPieShop.Controllers
                 AllergyInformation = vm.AllergyInformation,
                 InStock = vm.InStock,
                 IsPieOfTheWeek = vm.IsPieOfTheWeek,
-                CategoryId = vm.CategoryId,
-                Category = vm.Category
+                CategoryId = vm.CategoryId
             };
 
             _pieRepository.Add(pie);

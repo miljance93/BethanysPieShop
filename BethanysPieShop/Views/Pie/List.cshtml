@@ -3,6 +3,12 @@
 
 <h1>@Model.CurrentCategory</h1>
 
+<div class="custom-select" style="width:200px;">
+    <select>
+        <option value="0">@Model.CurrentCategory</option>
+    </select>
+</div>
+
 @foreach (var pie in Model.Pies)
 {
     <partial name="_PieCard" model="pie" />
