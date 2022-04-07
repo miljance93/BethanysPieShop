@@ -3,11 +3,14 @@
 
 <h1>@Model.CurrentCategory</h1>
 
-<div class="custom-select" style="width:200px;">
-    <select>
-        <option value="0">@Model.CurrentCategory</option>
-    </select>
+
+<div class="form-group">
+    <label class="col-md-2 control-label">Select Category</label>
+    <div class="col-md-2">
+        <select class="form-control" asp-for="SelectedCategoryId" name="SelectedCategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+    </div>    
 </div>
+
 
 @foreach (var pie in Model.Pies)
 {

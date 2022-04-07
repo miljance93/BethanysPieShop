@@ -7,5 +7,7 @@ namespace BethanysPieShop.ViewModels
     {
         public IEnumerable<Pie> Pies { get; set; }
         public string CurrentCategory { get; set; }
+        public int SelectedCategoryId { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
     }
 }
