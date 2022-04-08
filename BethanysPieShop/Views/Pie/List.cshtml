@@ -1,25 +1,25 @@
 ﻿@model PiesListViewModel
 
 
-<h1>@Model.CurrentCategory</h1>
+<h1>Category</h1>
 
-
-<div class="form-group">
-    <label class="col-md-2 control-label">Select Category</label>
-    <div class="col-md-2">
-        <select class="form-control" asp-for="SelectedCategoryId" name="SelectedCategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+<form asp-controller="Pie" asp-action="FilterCategory" method="get" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Select Category</label>
+        <div class="col-md-2">
+            <select class="form-control" asp-for="CategoryId" name="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+        </div>
+        <div>
+            <label class="col-md-2 control-label">Name:</label>
+        </div>
+        <div class="col-md-5">
+            <input type="text" class="form-control" />
+        </div>
+        <div>
+            <button type="submit" class="btn">Filter</button>
+        </div>
     </div>
-    <div>
-        <label class="col-md-2 control-label">Name:</label>
-    </div>
-    <div class="col-md-5">
-        <input type="text" class="form-control" />
-    </div>
-    <div>
-        <button type="button" class="btn">Filter</button>
-    </div>
-</div>
-
+</form>
 
 @foreach (var pie in Model.Pies)
 {

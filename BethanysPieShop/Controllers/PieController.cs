@@ -83,5 +83,31 @@ namespace BethanysPieShop.Controllers
 
             return View(vm);
         }
+
+        public ViewResult FilterCategory(int categoryId)
+        {
+            IEnumerable<Pie> pies;
+            int currentCategoryId = 0;
+
+            if (categoryId == 0)
+            {
+                pies = _pieRepository.AllPies.OrderBy(p => p.PieId);
+            }
+
+            else
+            {
+                pies = _pieRepository.AllPies.Where(p => p.Category.CategoryId == categoryId)
+                    .OrderBy(p => p.PieId);
+                currentCategoryId = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryId == categoryId).CategoryId;
+            }
+            
+
+            return View(new PiesListViewModel()
+            {
+                Pies = pies,
+                CategoryId = currentCategoryId,
+                Categories = _categoryRepository.AllCategories
+            });
+        }
     }
 }
