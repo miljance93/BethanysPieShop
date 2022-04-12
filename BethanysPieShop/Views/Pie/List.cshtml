@@ -3,7 +3,7 @@
 
 <h1>Category</h1>
 
-<form asp-controller="Pie" asp-action="FilterCategory" method="get" class="form-horizontal">
+<form asp-controller="Pie" asp-action="FilterCategory" method="post" class="form-horizontal">
     <div class="form-group">
         <label class="col-md-2 control-label">Select Category</label>
         <div class="col-md-2">
@@ -13,7 +13,7 @@
             <label class="col-md-2 control-label">Name:</label>
         </div>
         <div class="col-md-5">
-            <input type="text" class="form-control" />
+            <input type="text" class="form-control" name="PieName"/>
         </div>
         <div>
             <button type="submit" class="btn">Filter</button>
