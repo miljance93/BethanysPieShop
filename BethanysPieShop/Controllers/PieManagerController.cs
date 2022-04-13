@@ -17,7 +17,7 @@ namespace BethanysPieShop.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public ViewResult List()
+        public IActionResult List()
         {
             var pies = _pieRepository.AllPies;
             var vm = new PiesListViewModel()
@@ -75,7 +75,7 @@ namespace BethanysPieShop.Controllers
             return View(pie);
         }
 
-        public ViewResult Create()
+        public IActionResult Create()
         {
             var categories = _categoryRepository.AllCategories;
 
@@ -87,13 +87,11 @@ namespace BethanysPieShop.Controllers
             return View(vm);
         }
 
-        public ViewResult CreatePie(PieVM vm)
+        public IActionResult CreatePie(PieVM vm)
         {
-            var pie = new Pie();
-
             if (ModelState.IsValid)
             {
-                pie = new Pie
+                Pie pie = new Pie
                 {
                     PieId = vm.PieId,
                     ImageThumbnailUrl = vm.ImageThumbnailUrl,
@@ -109,13 +107,57 @@ namespace BethanysPieShop.Controllers
                 };
 
                 _pieRepository.Add(pie);
-            }
-            else 
-            {
-                
+                return View(pie);
             }
 
-            return View(pie);
+            return RedirectToAction("Create");
+        }
+
+        public ViewResult Delete(int pieId)
+        {
+            var pie = _pieRepository.GetPieById(pieId);
+            var categories = _categoryRepository.AllCategories;
+
+            var vm = new PieVM()
+            {
+                PieId = pie.PieId,
+                ImageThumbnailUrl = pie.ImageThumbnailUrl,
+                ImageUrl = pie.ImageUrl,
+                LongDescription = pie.LongDescription,
+                Name = pie.Name,
+                Price = pie.Price,
+                ShortDescription = pie.ShortDescription,
+                AllergyInformation = pie.AllergyInformation,
+                InStock = pie.InStock,
+                IsPieOfTheWeek = pie.IsPieOfTheWeek,
+                CategoryId = pie.CategoryId,
+                Categories = categories
+            };
+
+            return View(vm);
+        }
+
+        public IActionResult DeletePie(PieVM vm)
+        {
+            var pie = new Pie()
+            {
+                PieId = vm.PieId,
+                ImageThumbnailUrl = vm.ImageThumbnailUrl,
+                ImageUrl = vm.ImageUrl,
+                LongDescription = vm.LongDescription,
+                Name = vm.Name,
+                Price = vm.Price,
+                ShortDescription = vm.ShortDescription,
+                AllergyInformation = vm.AllergyInformation,
+                InStock = vm.InStock,
+                IsPieOfTheWeek = vm.IsPieOfTheWeek,
+                CategoryId = vm.CategoryId,
+                Category = vm.Category
+            };
+
+            _pieRepository.Delete(pie);
+
+            return RedirectToAction("List");
         }
     }
 }

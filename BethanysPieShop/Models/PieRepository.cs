@@ -73,5 +73,24 @@ namespace BethanysPieShop.Models
 
             return result;
         }
+
+        public bool Delete(Pie pie)
+        {
+            bool result;
+
+            try
+            {
+                _appDbContext.Pies.Remove(pie);
+                _appDbContext.SaveChanges();
+
+                result = true;
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
     }
 }

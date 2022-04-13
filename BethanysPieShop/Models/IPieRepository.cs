@@ -12,5 +12,6 @@ namespace BethanysPieShop.Models
         Pie GetPieById(int pieId);
         bool Update<TInput>(TInput input) where TInput : class;
         bool Add(Pie pie);
+        bool Delete(Pie pie);
     }
 }

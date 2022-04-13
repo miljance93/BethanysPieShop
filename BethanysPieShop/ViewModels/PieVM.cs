@@ -8,16 +8,16 @@ namespace BethanysPieShop.ViewModels
     public class PieVM
     {
         public int PieId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter a name of the pie!")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter an Image URL")]
         public string ImageUrl { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter the price!")]
         public decimal Price { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter the short descripiton")]
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter Image Thumbnail Url!")]
         public string ImageThumbnailUrl { get; set; }
         public string AllergyInformation { get; set; }
         public bool IsPieOfTheWeek { get; set; }
