@@ -1,4 +1,5 @@
 ﻿@model Pie
+<form asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-pieId="@Model.PieId" asp-route-amount="">
     <div class="col-sm-4 col-lg-4 col-md-4">
         <div class="thumbnail">
             <img src="@Model.ImageThumbnailUrl" alt="">
@@ -12,12 +13,11 @@
                 <p>@Model.ShortDescription</p>
             </div>
             <div>
-                <a class="btn btn-primary"
-                   asp-controller="ShoppingCart"
-                   asp-action="AddToShoppingCart"
-                   asp-route-pieId="@Model.PieId">Add to cart</a>
-                <label>Choose amount</label>
-                <input type="text" class="text-right" size="1">
+                <button type="submit" title="Add To Cart" class="btn btn-primary">Add to cart</button>
+                <input class="pull-right" type="number" min="1" max="10" style="width:3em;" value="1" name="Amount" id="Amount">
+                <b>Choose amount</b>
             </div>
         </div>
     </div>
+</form>
+    
