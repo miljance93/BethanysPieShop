@@ -1,25 +1,29 @@
 ﻿@model PiesListViewModel
 
 
-<h1>Category</h1>
+<h1>@Model.CurrentCategory</h1>
 
-<form asp-controller="Pie" asp-action="FilterCategory" method="post" class="form-horizontal">
-    <div class="form-group">
-        <label class="col-md-2 control-label">Select Category</label>
-        <div class="col-md-2">
-            <select class="form-control" asp-for="CategoryId" name="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+@if (Model.CurrentCategory == "All pies")
+{
+    <form asp-controller="Pie" asp-action="FilterCategory" method="post" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-2 control-label">Select Category</label>
+            <div class="col-md-2">
+                <select class="form-control" asp-for="CategoryId" name="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+            </div>
+            <div>
+                <label class="col-md-2 control-label">Name:</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="PieName" />
+            </div>
+            <div>
+                <button type="submit" class="btn">Filter</button>
+            </div>
         </div>
-        <div>
-            <label class="col-md-2 control-label">Name:</label>
-        </div>
-        <div class="col-md-5">
-            <input type="text" class="form-control" name="PieName"/>
-        </div>
-        <div>
-            <button type="submit" class="btn">Filter</button>
-        </div>
-    </div>
-</form>
+    </form>
+}
+
 
 @foreach (var pie in Model.Pies)
 {
