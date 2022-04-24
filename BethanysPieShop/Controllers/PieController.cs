@@ -35,10 +35,23 @@ namespace BethanysPieShop.Controllers
         //    return View(piesListViewModel);
         //}
 
-        public ViewResult List(string category)
+        public ViewResult List(string category, string pieName, int categoryId)
         {
             IEnumerable<Pie> pies;
             string currentCategory;
+            int currentCategoryId = 0;
+
+            if (categoryId != 0 && pieName != null)
+            {
+                pies = _pieRepository.AllPies.Where(p => p.Name == pieName && p.Category.CategoryId == categoryId)
+                    .OrderBy(p => p.PieId);
+                currentCategoryId = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryId == categoryId).CategoryId;
+
+                return View(new PiesListViewModel
+                {
+                    Pies = pies
+                });
+            }
 
             if (string.IsNullOrEmpty(category))
             {
