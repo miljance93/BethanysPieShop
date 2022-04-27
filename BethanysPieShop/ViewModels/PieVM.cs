@@ -1,4 +1,6 @@
 ﻿using BethanysPieShop.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,5 +28,10 @@ namespace BethanysPieShop.ViewModels
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public IEnumerable<Category> Categories { get; set; }
+        [BindProperty]
+        public string Upload { get; set; }
+        public string[] Uploads = new[] { "From Computer", "From URL" };
+        [Required(ErrorMessage = "Please upload image")]
+        public IFormFile UploadImage { get; set; }
     }
 }

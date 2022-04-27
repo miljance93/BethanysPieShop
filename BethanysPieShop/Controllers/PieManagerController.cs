@@ -1,7 +1,10 @@
 ﻿using BethanysPieShop.Models;
 using BethanysPieShop.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace BethanysPieShop.Controllers
@@ -10,11 +13,13 @@ namespace BethanysPieShop.Controllers
     {
         private readonly IPieRepository _pieRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public PieManagerController(IPieRepository pieRepository, ICategoryRepository categoryRepository)
+        public PieManagerController(IPieRepository pieRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hostEnvironment)
         {
             _pieRepository = pieRepository;
             _categoryRepository = categoryRepository;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult List()
@@ -75,13 +80,32 @@ namespace BethanysPieShop.Controllers
             return View(pie);
         }
 
-        public IActionResult Create()
+        private string UploadedFile(PieVM vm)
+        {
+            string uniqueFileName = null;
+
+            if (vm.UploadImage != null)
+            {
+                string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.UploadImage.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using(var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    vm.UploadImage.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
+
+        public IActionResult Create(string upload)
         {
             var categories = _categoryRepository.AllCategories;
 
             var vm = new PieVM
             {
-                Categories = categories
+                Categories = categories,
+                Upload = upload
             };
 
             return View(vm);

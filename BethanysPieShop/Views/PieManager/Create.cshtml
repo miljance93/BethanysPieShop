@@ -45,20 +45,46 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
+        <label class="col-md-2 control-label">Upload</label>
         <div class="col-md-5">
-            <input asp-for="ImageUrl" class="form-control" />
-            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            @foreach (var upload in Model.Uploads)
+            {
+                <input type="radio" asp-for="Upload" value="@upload" />@upload<br />
+            }
+            <input type="submit" asp-action="Create" />
         </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="ImageThumbnailUrl" class="col-md-2 control-label"></label>
-        <div class="col-md-5">
-            <input asp-for="ImageThumbnailUrl" class="form-control" />
-            <span asp-validation-for="ImageThumbnailUrl" class="text-danger"></span>
+    @if (Model.Upload == "From URL")
+    {
+        <div class="form-group">
+            <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label asp-for="ImageThumbnailUrl" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="ImageThumbnailUrl" class="form-control" />
+                <span asp-validation-for="ImageThumbnailUrl" class="text-danger"></span>
+            </div>
+        </div>
+    }
+
+    @if (Model.Upload == "From Computer")
+    {
+        <div class="form-group">
+            <label asp-for="UploadImage" class="col-md-2 control-label"></label>
+            <div class="custom-file">
+                <input asp-for="UploadImage" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <span asp-validation-for="UploadImage" class="text-danger"></span>
+        </div>
+    }
 
     <div class="form-group">
         <label asp-for="IsPieOfTheWeek" class="col-md-2 control-label"></label>
