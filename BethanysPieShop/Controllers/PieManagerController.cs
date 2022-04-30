@@ -3,9 +3,7 @@ using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace BethanysPieShop.Controllers
 {
@@ -80,24 +78,6 @@ namespace BethanysPieShop.Controllers
             return View(pie);
         }
 
-        private string UploadedFile(PieVM vm)
-        {
-            string uniqueFileName = null;
-
-            if (vm.UploadImage != null)
-            {
-                string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.UploadImage.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using(var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    vm.UploadImage.CopyTo(fileStream);
-                }
-            }
-
-            return uniqueFileName;
-        }
-
         public IActionResult Create(string upload)
         {
             var categories = _categoryRepository.AllCategories;
@@ -111,27 +91,70 @@ namespace BethanysPieShop.Controllers
             return View(vm);
         }
 
+        private string UploadedFile(PieVM vm)
+        {
+            string uniqueFileName = null;
+
+            if (vm.UploadImage != null)
+            {
+                string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "PieImages");
+                uniqueFileName = "Picture " + "_" + Guid.NewGuid().ToString() + "_" + vm.UploadImage.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                vm.UploadImage.CopyTo(fileStream);
+            }
+
+            return uniqueFileName;
+        }
+
         public IActionResult CreatePie(PieVM vm)
         {
+            var pie = new Pie();
             if (ModelState.IsValid)
             {
-                Pie pie = new Pie
+                if (vm.Upload == "From URL")
                 {
-                    PieId = vm.PieId,
-                    ImageThumbnailUrl = vm.ImageThumbnailUrl,
-                    ImageUrl = vm.ImageUrl,
-                    LongDescription = vm.LongDescription,
-                    Name = vm.Name,
-                    Price = vm.Price,
-                    ShortDescription = vm.ShortDescription,
-                    AllergyInformation = vm.AllergyInformation,
-                    InStock = vm.InStock,
-                    IsPieOfTheWeek = vm.IsPieOfTheWeek,
-                    CategoryId = vm.CategoryId
-                };
+                    pie = new Pie
+                    {
+                        PieId = vm.PieId,
+                        ImageThumbnailUrl = vm.ImageThumbnailUrl,
+                        ImageUrl = vm.ImageUrl,
+                        LongDescription = vm.LongDescription,
+                        Name = vm.Name,
+                        Price = vm.Price,
+                        ShortDescription = vm.ShortDescription,
+                        AllergyInformation = vm.AllergyInformation,
+                        InStock = vm.InStock,
+                        IsPieOfTheWeek = vm.IsPieOfTheWeek,
+                        CategoryId = vm.CategoryId
+                    };
 
-                _pieRepository.Add(pie);
-                return View(pie);
+                    _pieRepository.Add(pie);
+                    return View(pie);
+                }
+
+                else if(vm.Upload == "From Computer")
+                {
+                    string uniqueFileName = UploadedFile(vm);
+
+                    pie = new Pie
+                    {
+                        PieId = vm.PieId,
+                        ImageThumbnailUrl = uniqueFileName,
+                        ImageUrl = uniqueFileName,
+                        LongDescription = vm.LongDescription,
+                        Name = vm.Name,
+                        Price = vm.Price,
+                        ShortDescription = vm.ShortDescription,
+                        AllergyInformation = vm.AllergyInformation,
+                        InStock = vm.InStock,
+                        IsPieOfTheWeek = vm.IsPieOfTheWeek,
+                        CategoryId = vm.CategoryId
+                    };
+
+                    _pieRepository.Add(pie);
+                    return View(pie);
+                }                
             }
 
             return RedirectToAction("Create");

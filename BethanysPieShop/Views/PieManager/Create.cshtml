@@ -1,8 +1,53 @@
 ﻿@model PieVM;
 
-<form asp-controller="PieManager" asp-action="CreatePie" method="post" class="form-horizontal" role="form" asp-route-pieId="@Model.PieId">
+<form asp-controller="PieManager" 
+      asp-action="CreatePie" method="post" class="form-horizontal" role="form" 
+      asp-route-pieId="@Model.PieId"
+      enctype="multipart/form-data">
     <h4>Fill in details about pie.</h4>
     <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Upload</label>
+        <div class="col-md-5">
+            @foreach (var upload in Model.Uploads)
+            {
+                <input type="radio" asp-for="Upload" value="@upload" />@upload<br />
+            }
+            <input type="submit" asp-action="Create" value="Confirm" />
+        </div>
+    </div>
+
+    @if (Model.Upload == "From URL")
+    {
+        <div class="form-group">
+            <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageThumbnailUrl" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="ImageThumbnailUrl" class="form-control" />
+                <span asp-validation-for="ImageThumbnailUrl" class="text-danger"></span>
+            </div>
+        </div>
+    }
+
+    @if (Model.Upload == "From Computer")
+    {
+        <div class="form-group">
+            <label asp-for="UploadImage" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <label asp-for="UploadImage" class="control-label"></label>
+                <input asp-for="UploadImage" accept="image/*" />
+            </div>
+            <span asp-validation-for="UploadImage" class="text-danger"></span>
+        </div>
+    }
 
     <div class="form-group">
         <label asp-for="Name" class="col-md-2 control-label"></label>
@@ -43,48 +88,6 @@
             <span asp-validation-for="Price" class="text-danger"></span>
         </div>
     </div>
-
-    <div class="form-group">
-        <label class="col-md-2 control-label">Upload</label>
-        <div class="col-md-5">
-            @foreach (var upload in Model.Uploads)
-            {
-                <input type="radio" asp-for="Upload" value="@upload" />@upload<br />
-            }
-            <input type="submit" asp-action="Create" />
-        </div>
-    </div>
-
-    @if (Model.Upload == "From URL")
-    {
-        <div class="form-group">
-            <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
-            <div class="col-md-5">
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="ImageThumbnailUrl" class="col-md-2 control-label"></label>
-            <div class="col-md-5">
-                <input asp-for="ImageThumbnailUrl" class="form-control" />
-                <span asp-validation-for="ImageThumbnailUrl" class="text-danger"></span>
-            </div>
-        </div>
-    }
-
-    @if (Model.Upload == "From Computer")
-    {
-        <div class="form-group">
-            <label asp-for="UploadImage" class="col-md-2 control-label"></label>
-            <div class="custom-file">
-                <input asp-for="UploadImage" class="custom-file-input" id="customFile">
-                <label class="custom-file-label" for="customFile">Choose file</label>
-            </div>
-            <span asp-validation-for="UploadImage" class="text-danger"></span>
-        </div>
-    }
 
     <div class="form-group">
         <label asp-for="IsPieOfTheWeek" class="col-md-2 control-label"></label>

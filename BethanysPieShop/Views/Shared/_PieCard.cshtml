@@ -2,6 +2,10 @@
 <form asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-pieId="@Model.PieId" asp-route-amount="">
     <div class="col-sm-4 col-lg-4 col-md-4">
         <div class="thumbnail">
+            @if (Model.ImageThumbnailUrl.Contains("Picture"))
+            {
+                <img src="~/PieImages/@Model.ImageThumbnailUrl" />
+            }
             <img src="@Model.ImageThumbnailUrl" alt="">
             <div class="caption">
                 <h3 class="pull-right">@Model.Price.ToString("c")</h3>
