@@ -41,11 +41,15 @@ namespace BethanysPieShop.Controllers
             string currentCategory;
             int currentCategoryId = 0;
 
-            if (categoryId != 0 && pieName != null)
+            if (pieName != null)
             {
-                pies = _pieRepository.AllPies.Where(p => p.Name == pieName && p.Category.CategoryId == categoryId)
+                pies = _pieRepository.AllPies.Where(p => p.Name == pieName)
                     .OrderBy(p => p.PieId);
-                currentCategoryId = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryId == categoryId).CategoryId;
+
+                if (categoryId != 0)
+                {
+                    currentCategoryId = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryId == categoryId).CategoryId;
+                }
 
                 return View(new PiesListViewModel
                 {

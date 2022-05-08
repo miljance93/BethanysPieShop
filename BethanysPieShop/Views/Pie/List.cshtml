@@ -3,16 +3,19 @@
 
 <h1>@Model.CurrentCategory</h1>
 
-@if (Model.CurrentCategory == "All pies")
-{
-    <form asp-controller="Pie" asp-action="List" method="post" class="form-horizontal">
-        <div class="form-group">
+<form asp-controller="Pie" asp-action="List" method="post" class="form-horizontal">
+    <div class="form-group">
+        @if (Model.CurrentCategory == "All pies")
+        {
             <label class="col-md-2 control-label">Select Category</label>
             <div class="col-md-2">
                 <select class="form-control" asp-for="CategoryId" name="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
             </div>
+        }
+        @if (Model.CurrentCategory != null)
+        {
             <div>
-                <label class="col-md-2 control-label">Name:</label>
+                <label class="col-md-2 control-label pull-left">Name:</label>
             </div>
             <div class="col-md-5">
                 <input type="text" class="form-control" name="PieName" />
@@ -20,9 +23,9 @@
             <div>
                 <button type="submit" class="btn">Filter</button>
             </div>
-        </div>
-    </form>
-}
+        }
+    </div>
+</form>
 
 
 @foreach (var pie in Model.Pies)
