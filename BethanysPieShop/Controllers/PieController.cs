@@ -53,7 +53,9 @@ namespace BethanysPieShop.Controllers
 
                 return View(new PiesListViewModel
                 {
-                    Pies = pies
+                    Pies = pies,
+                    CategoryId = categoryId,
+                    Categories = _categoryRepository.AllCategories
                 });
             }
 
