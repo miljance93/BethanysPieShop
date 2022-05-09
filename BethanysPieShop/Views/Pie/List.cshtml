@@ -24,6 +24,22 @@
                 <button type="submit" class="btn">Filter</button>
             </div>
         }
+        @if (Model.CurrentCategory == null)
+        {
+            <label class="col-md-2 control-label">Select Category</label>
+            <div class="col-md-2">
+                <select class="form-control" asp-for="CategoryId" name="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+            </div>
+            <div>
+                <label class="col-md-2 control-label pull-left">Name:</label>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="PieName" />
+            </div>
+            <div>
+                <button type="submit" class="btn">Filter</button>
+            </div>
+        }
     </div>
 </form>
 
