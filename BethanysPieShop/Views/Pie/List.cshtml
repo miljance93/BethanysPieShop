@@ -9,7 +9,10 @@
         {
             <label class="col-md-2 control-label">Select Category</label>
             <div class="col-md-2">
-                <select class="form-control" asp-for="CategoryId" name="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+                <select class="form-control" 
+                        asp-for="CategoryName" 
+                        name="Category" 
+                        asp-items="@(new SelectList(Model.Categories, "CategoryName", "CategoryName"))"></select>
             </div>
         }
         @if (Model.CurrentCategory != null)
@@ -18,7 +21,7 @@
                 <label class="col-md-2 control-label">Name:</label>
             </div>
             <div class="col-md-5">
-                <input type="text" class="form-control" name="PieName" />
+                <input type="text" class="form-control" name="PieNameSearch" />
             </div>
             <div>
                 <button type="submit" class="btn">Filter</button>
@@ -28,13 +31,13 @@
         {
             <label class="col-md-2 control-label">Select Category</label>
             <div class="col-md-2">
-                <select class="form-control" asp-for="CategoryId" name="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+                <select class="form-control" asp-for="CategoryName" name="Category" asp-items="@(new SelectList(Model.Categories, "CategoryName", "CategoryName"))"></select>
             </div>
             <div>
                 <label class="col-md-2 control-label pull-left">Name:</label>
             </div>
             <div class="col-md-5">
-                <input type="text" class="form-control" name="PieName" />
+                <input type="text" class="form-control" name="PieNameSearch" />
             </div>
             <div>
                 <button type="submit" class="btn">Filter</button>

@@ -35,46 +35,64 @@ namespace BethanysPieShop.Controllers
         //    return View(piesListViewModel);
         //}
 
-        public ViewResult List(string category, string pieName, int categoryId)
+        public ViewResult List(string category, string pieNameSearch)
         {
             IEnumerable<Pie> pies;
-            string currentCategory;
-            int currentCategoryId = 0;
+            string categoryName = string.Empty;
 
-            if (pieName != null)
+            var pieName = from p in _pieRepository.AllPies select p;
+
+            if (!String.IsNullOrEmpty(pieNameSearch) && pieNameSearch.Length >= 3)
             {
-                pies = _pieRepository.AllPies.Where(p => p.Name == pieName)
-                    .OrderBy(p => p.PieId);
+                pieName = pieName.Where(p => p.Name.ToLower()!.Contains(pieNameSearch.ToLower()));
 
-                if (categoryId != 0)
+                if (!string.IsNullOrEmpty(category) && category != "All pies")
                 {
-                    currentCategoryId = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryId == categoryId).CategoryId;
+                    pieName = _pieRepository.AllPies.Where(p => p.Name.ToLower()!.Contains(pieNameSearch.ToLower()) 
+                    && p.Category.CategoryName == category);
                 }
 
                 return View(new PiesListViewModel
                 {
-                    Pies = pies,
-                    CategoryId = categoryId,
+                    Pies = pieName,
                     Categories = _categoryRepository.AllCategories
                 });
             }
 
-            if (string.IsNullOrEmpty(category))
+            if (string.IsNullOrEmpty(category) || category == "All pies")
             {
                 pies = _pieRepository.AllPies.OrderBy(p => p.PieId);
-                currentCategory = "All pies";
+                categoryName = "All pies";
+
+                Category allPies = new()
+                {
+                    Pies = pies.ToList(),
+                    CategoryId = 0,
+                    CategoryName = "All pies",
+                    Description = "All pies"
+                };
+
+                var categories = _categoryRepository.AllCategories.Append(allPies);
+
+                return View(new PiesListViewModel
+                {
+                    Categories = categories,
+                    Pies = pies,
+                    CurrentCategory = categoryName
+                });
             }
+
             else
             {
                 pies = _pieRepository.AllPies.Where(p => p.Category.CategoryName == category)
                     .OrderBy(p => p.PieId);
-                currentCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
+                categoryName = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
             }
 
             return View(new PiesListViewModel
             {
                 Pies = pies,
-                CurrentCategory = currentCategory,
+                CurrentCategory = categoryName,
                 Categories = _categoryRepository.AllCategories
             });
         }
