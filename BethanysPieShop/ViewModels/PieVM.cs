@@ -28,7 +28,6 @@ namespace BethanysPieShop.ViewModels
         public IEnumerable<Category> Categories { get; set; }
         [BindProperty]
         public string Upload { get; set; }
-        public string[] Uploads = new[] { "From Computer", "From URL" };
         public IFormFile UploadImage { get; set; }
     }
 }
