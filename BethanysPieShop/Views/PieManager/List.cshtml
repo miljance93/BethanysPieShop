@@ -1,17 +1,178 @@
-﻿@model PiesListViewModel
+﻿@model CombinedPiesAndListViewModel
+
+<style>
+    #createModalBtn{
+        margin: 15px;
+    }
+</style>
+<html>
+<body>
+    <h1>@Model.CurrentCategory</h1>
+
+    <div>
+        <button type="button" id="createModalBtn" class="btn btn-primary " data-toggle="modal" data-target="#myModal">Create pie</button>
+    </div>
+    
+
+    <!-- Trigger the mod  al with a button -->
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Fill in details about pie.</h4>
+                </div>
+                <div class="modal-body">
+                    <form asp-controller="PieManager"
+                          asp-action="CreatePie" method="post" class="form-horizontal" role="form"
+                          asp-route-pieId="@Model.PieId"
+                          enctype="multipart/form-data">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Upload</label>
+                            <div class="col-md-5">
+                                <input type="radio" id="fromCmp" name="upload" value="FromComputer" asp-for="Upload" checked />
+                                <label>From Computer</label>
+                                <input type="radio" id="fromUrl" name="upload" value="FromUrl" asp-for="Upload" />
+                                <label>From URL</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="urlUploadDIv">
+                            <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
+                            <div class="col-md-5">
+                                <input asp-for="ImageUrl" class="form-control" />
+                                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="urlUploadDIv1">
+                            <label asp-for="ImageThumbnailUrl" class="col-md-2 control-label"></label>
+                            <div class="col-md-5">
+                                <input asp-for="ImageThumbnailUrl" class="form-control" />
+                                <span asp-validation-for="ImageThumbnailUrl" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="imgUploadDIv">
+                            <label asp-for="UploadImage" class="col-md-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <label asp-for="UploadImage" class="control-label"></label>
+                                <input asp-for="UploadImage" accept="image/*" />
+                            </div>
+                            <span asp-validation-for="UploadImage" class="text-danger"></span>
+                        </div>
 
 
-<h1>@Model.CurrentCategory</h1>
+                        <div class="form-group">
+                            <label asp-for="Name" class="col-md-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
 
-<div class="edit">
-    <p class="button">
-        <a class="btn btn-primary"
-           asp-controller="PieManager"
-           asp-action="Create">Create pie</a>
-    </p>
-</div>
+                        <div class="form-group">
+                            <label asp-for="ShortDescription" class="col-md-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <input asp-for="ShortDescription" class="form-control" />
+                                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                            </div>
+                        </div>
 
-@foreach (var pie in Model.Pies)
-{
-    <partial name="_PieManagerCard" model="pie" />
-}
+                        <div class="form-group">
+                            <label asp-for="LongDescription" class="col-md-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <input asp-for="LongDescription" class="form-control" />
+                                <span asp-validation-for="LongDescription" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="AllergyInformation" class="col-md-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <input asp-for="AllergyInformation" class="form-control" />
+                                <span asp-validation-for="AllergyInformation" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Price" class="col-md-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <input asp-for="Price" class="form-control" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="IsPieOfTheWeek" class="col-md-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <input asp-for="IsPieOfTheWeek" class="form-control" />
+                                <span asp-validation-for="IsPieOfTheWeek" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="InStock" class="col-md-2 control-label"></label>
+                            <div class="col-sm-5">
+                                <input asp-for="InStock" class="form-control" />
+                                <span asp-validation-for="InStock" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Select Category</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" asp-for="CategoryId" name="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"></select>
+                            </div>
+                            <input type="hidden" asp-for="CategoryId" />
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Add pie</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var pie in Model.Pies)
+    {
+        <partial name="_PieManagerCard" model="pie" />
+    }
+</body>
+
+</html>
+<script>
+    const imgUpload = document.getElementById('imgUploadDIv');
+    const urlUpload = document.getElementById('urlUploadDIv');
+    const urlUploadDIv1 = document.getElementById('urlUploadDIv1');
+
+    urlUploadDIv1.style.display = "none"
+    urlUpload.style.display = 'none'
+
+    function handleRadioClick() {
+        console.log('radio clicked')
+
+        if (document.getElementById('fromCmp').checked) {
+            imgUpload.style.display = 'block';
+            urlUpload.style.display = 'none';
+            urlUploadDIv1.style.display = 'none'
+
+        } else {
+            imgUpload.style.display = 'none';
+            urlUpload.style.display = 'block';
+            urlUploadDIv1.style.display = 'block'
+        }
+    }
+
+    const radioButtons = document.querySelectorAll('input[name="upload"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('click', handleRadioClick);
+    });
+</script>

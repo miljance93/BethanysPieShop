@@ -23,9 +23,10 @@ namespace BethanysPieShop.Controllers
         public IActionResult List()
         {
             var pies = _pieRepository.AllPies;
-            var vm = new PiesListViewModel()
+            var vm = new CombinedPiesAndListViewModel()
             {
-                Pies = pies
+                Pies = pies,
+                Categories = _categoryRepository.AllCategories
             };
 
             return View(vm);
@@ -112,7 +113,7 @@ namespace BethanysPieShop.Controllers
             var pie = new Pie();
             if (ModelState.IsValid)
             {
-                if (vm.Upload == "From URL")
+                if (vm.Upload == "FromUrl")
                 {
                     pie = new Pie
                     {
@@ -133,7 +134,7 @@ namespace BethanysPieShop.Controllers
                     return View(pie);
                 }
 
-                else if(vm.Upload == "From Computer")
+                else if(vm.Upload == "FromComputer")
                 {
                     string uniqueFileName = UploadedFile(vm);
 
