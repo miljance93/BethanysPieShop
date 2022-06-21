@@ -32,6 +32,7 @@ namespace BethanysPieShop
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddHttpClient();
 
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();

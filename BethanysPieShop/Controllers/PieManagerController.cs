@@ -2,8 +2,13 @@
 using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BethanysPieShop.Controllers
 {
@@ -32,12 +37,13 @@ namespace BethanysPieShop.Controllers
             return View(vm);
         }
 
-        public ViewResult Edit(int pieId) 
+        [HttpGet]
+        public JsonResult Edit(int pieId)
         {
             var pie = _pieRepository.GetPieById(pieId);
             var categories = _categoryRepository.AllCategories;
 
-            var vm = new PieVM()
+            var vm = new CombinedPiesAndListViewModel()
             {
                 PieId = pie.PieId,
                 ImageThumbnailUrl = pie.ImageThumbnailUrl,
@@ -53,10 +59,10 @@ namespace BethanysPieShop.Controllers
                 Categories = categories
             };
 
-            return View(vm);
+            return Json(vm);
         }
 
-        public ViewResult EditPie(PieVM vm) 
+        public ViewResult EditPie(PieVM vm)
         {
 
             var pie = new Pie()
@@ -134,7 +140,7 @@ namespace BethanysPieShop.Controllers
                     return View(pie);
                 }
 
-                else if(vm.Upload == "FromComputer")
+                else if (vm.Upload == "FromComputer")
                 {
                     string uniqueFileName = UploadedFile(vm);
 
@@ -155,7 +161,7 @@ namespace BethanysPieShop.Controllers
 
                     _pieRepository.Add(pie);
                     return View(pie);
-                }                
+                }
             }
 
             return RedirectToAction("Create");
@@ -206,6 +212,29 @@ namespace BethanysPieShop.Controllers
             _pieRepository.Delete(pie);
 
             return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory(CombinedPiesAndListViewModel categoryVm)
+        {
+            Category category = new()
+            {
+                CategoryName = categoryVm.Category.CategoryName,
+                Description = categoryVm.Category.Description
+            };
+
+            var client = new HttpClient();
+            var endpoint = "http://localhost:34281/api/category";
+            var jsonConvert = JsonConvert.SerializeObject(category);
+            var content = new StringContent(jsonConvert, Encoding.UTF8, "application/json");
+            var result = await client.PostAsync(endpoint, content);
+
+            if (result.IsSuccessStatusCode) 
+            {
+                return RedirectToAction("List");
+            }
+
+            return BadRequest();
         }
     }
 }

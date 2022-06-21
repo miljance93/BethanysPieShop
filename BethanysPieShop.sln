@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShop", "BethanysPieShop\BethanysPieShop.csproj", "{099043BB-89A0-4CB0-8F7F-33EEC110A15C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BethanysPieShop", "BethanysPieShop\BethanysPieShop.csproj", "{099043BB-89A0-4CB0-8F7F-33EEC110A15C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShop.Domain", "BethanysPieShop.Domain\BethanysPieShop.Domain.csproj", "{30C255F8-A405-4ECE-8548-8081099A3ED6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShop.Persistence", "BethanysPieShop.Persistence\BethanysPieShop.Persistence.csproj", "{C4459480-B45D-4EA0-BFDE-F834618405EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShop.Api", "BethanysPieShop.Api\BethanysPieShop.Api.csproj", "{A8936BFD-23A3-4C6B-A9CE-D35BFD3DE334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanysPieShop.Application", "BethanysPieShop.Application\BethanysPieShop.Application.csproj", "{556BC63B-A42E-4430-BCFA-03818C715F80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{099043BB-89A0-4CB0-8F7F-33EEC110A15C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{099043BB-89A0-4CB0-8F7F-33EEC110A15C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{099043BB-89A0-4CB0-8F7F-33EEC110A15C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30C255F8-A405-4ECE-8548-8081099A3ED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C255F8-A405-4ECE-8548-8081099A3ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C255F8-A405-4ECE-8548-8081099A3ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C255F8-A405-4ECE-8548-8081099A3ED6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4459480-B45D-4EA0-BFDE-F834618405EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4459480-B45D-4EA0-BFDE-F834618405EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4459480-B45D-4EA0-BFDE-F834618405EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4459480-B45D-4EA0-BFDE-F834618405EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8936BFD-23A3-4C6B-A9CE-D35BFD3DE334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8936BFD-23A3-4C6B-A9CE-D35BFD3DE334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8936BFD-23A3-4C6B-A9CE-D35BFD3DE334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8936BFD-23A3-4C6B-A9CE-D35BFD3DE334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{556BC63B-A42E-4430-BCFA-03818C715F80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{556BC63B-A42E-4430-BCFA-03818C715F80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{556BC63B-A42E-4430-BCFA-03818C715F80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{556BC63B-A42E-4430-BCFA-03818C715F80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

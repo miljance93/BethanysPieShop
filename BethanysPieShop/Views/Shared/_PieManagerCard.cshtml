@@ -15,14 +15,16 @@
                    asp-route-id="@Model.PieId">@Model.Name</a>
             </h3>
             <p>@Model.ShortDescription</p>
+            
         </div>
         <div class="edit">
-            <p class="button">
-                <a class="btn btn-primary"
-                   asp-controller="PieManager"
-                   asp-action="Edit"
-                   asp-route-pieId="@Model.PieId">Edit</a>
-            </p>
+            @*<p class="button">
+            <a class="btn btn-primary"
+               asp-controller="PieManager"
+               asp-action="Edit"
+               asp-route-pieId="@Model.PieId">Edit</a>
+        </p>*@
+            <button class="btn btn-primary" onclick="editPie(@Model.PieId)"  data-toggle="modal" data-target="#myModal">Edit</button>
         </div>
         <div class="edit">
             <p class="button">
@@ -34,3 +36,21 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function editPie(pieId) {
+        /*console.log(pieId)*/
+
+        $.ajax({
+            type: "GET",
+            data: { pieId: pieId },
+            url: "@Url.Action("Edit", "PieManager")",
+            success: function (data) {
+                $("#myModal").html(data);
+            },
+            error: function (data) {
+                alert("error");
+            }
+        })
+    }
+</script>
