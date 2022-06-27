@@ -9,7 +9,7 @@ namespace BethanysPieShop.Application.Categories
 {
     public class Delete
     {
-        public record Command(string CategoryName) : IRequest<Result<bool>>;
+        public record Command(int CategoryId) : IRequest<Result<bool>>;
 
         public class Handler : IRequestHandler<Command, Result<bool>>
         {
@@ -22,8 +22,7 @@ namespace BethanysPieShop.Application.Categories
 
             public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var result = await _categoryRepository.GetById<CategoryDTO>
-                    (x => x.CategoryName.ToLower() == request.CategoryName.ToLower());
+                var result = await _categoryRepository.GetById<CategoryDTO>(x => x.CategoryId  == request.CategoryId);
 
                 if (result != null)
                 {

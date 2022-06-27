@@ -1,0 +1,7 @@
+﻿@model Category
+
+<div class="row" id="categories">
+    <label>@Model.CategoryName</label>
+    <a class="btn-link" asp-controller="PieManager" asp-action="EditCategory" asp-route-categoryId="@Model.CategoryId">Edit</a>
+    <a class="btn-link" asp-controller="PieManager" asp-action="DeleteCategory" asp-route-id="@Model.CategoryId">Delete</a>
+</div>

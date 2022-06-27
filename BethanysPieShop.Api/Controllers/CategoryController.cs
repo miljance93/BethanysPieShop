@@ -13,16 +13,22 @@ namespace BethanysPieShop.Api.Controllers
             return HandleResult(await Mediator.Send(new Create.Command(category)));
         }
 
-        [HttpDelete("{categoryName}")]
-        public async Task<IActionResult> Delete(string categoryName)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            return HandleResult(await Mediator.Send(new Delete.Command(categoryName)));
+            return HandleResult(await Mediator.Send(new Delete.Command(id)));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id,CategoryDTO category)
         {
             return HandleResult(await Mediator.Send(new Update.Command(id, category)));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCategory(CategoryDTO category)
+        {
+            return HandleResult(await Mediator.Send(new Search.Query(category)));
         }
     }
 }

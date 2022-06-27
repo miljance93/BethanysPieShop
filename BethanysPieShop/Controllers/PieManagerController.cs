@@ -37,6 +37,16 @@ namespace BethanysPieShop.Controllers
             return View(vm);
         }
 
+        public IActionResult CategoryList()
+        {
+            var vm = new CombinedPiesAndListViewModel()
+            {
+                Categories = _categoryRepository.AllCategories
+            };
+
+            return View(vm);
+        }
+
         [HttpGet]
         public JsonResult Edit(int pieId)
         {
@@ -231,7 +241,22 @@ namespace BethanysPieShop.Controllers
 
             if (result.IsSuccessStatusCode) 
             {
-                return RedirectToAction("List");
+                return RedirectToAction("CategoryList");
+            }
+
+            return BadRequest();
+        }
+
+        
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            var client = new HttpClient();
+            var endpoint = "http://localhost:34281/api/category/";
+            var result = await client.DeleteAsync(endpoint + id.ToString());
+
+            if (result.IsSuccessStatusCode)
+            {
+                return RedirectToAction("CategoryList");
             }
 
             return BadRequest();
