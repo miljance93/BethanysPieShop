@@ -25,10 +25,10 @@ namespace BethanysPieShop.Api.Controllers
             return HandleResult(await Mediator.Send(new Update.Command(id, category)));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetCategory(CategoryDTO category)
-        {
-            return HandleResult(await Mediator.Send(new Search.Query(category)));
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> GetCategory(CategoryDTO category)
+        //{
+        //    return HandleResult(await Mediator.Send(new Search.Query(category)));
+        //}
     }
 }
